@@ -75,7 +75,7 @@ public class QueryStatement {
 		String coun = sc.next();
 		
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select Country.Name, City.Name, City.Population from City inner join Country on Country.Code = City.CountryCode where Country.Name LIKE '%" + coun + "%'");
+		ResultSet rs = st.executeQuery("select Country.Name, City.Name, City.Population from City, Country where Country.Name LIKE '%" + coun + "%'");
 		
 		while(rs.next()) {
 			System.out.print(rs.getString("Country.Name") + ", ");
@@ -91,7 +91,7 @@ public class QueryStatement {
 		String ct = sc.next();
 		
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select Country.Name, Country.Code, City.Name, City.Population from City inner join Country on Country.Code = City.CountryCode where Country.Name LIKE '%" + ct + "%'" + "or Country.Code LIKE '%" + ct + "%'");
+		ResultSet rs = st.executeQuery("select Country.Name, Country.Code, City.Name, City.Population from City, Country where Country.Name LIKE '%" + ct + "%'" + "or Country.Code LIKE '" + ct + "'");
 		
 		while(rs.next()) {
 			System.out.print(rs.getString("Country.Name") + ", ");
@@ -153,7 +153,7 @@ public class QueryStatement {
 		String lan = sc.next();
 		
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select Language, CountryCode from CountryLanguage where IsOfficial LIKE 'T' && Language LIKE '" + lan + "'");
+		ResultSet rs = st.executeQuery("select Language, CountryCode from CountryLanguage where IsOfficial LIKE 'T' and Language LIKE '" + lan + "'");
 		while(rs.next()) {
 			System.out.print(rs.getString("Language") + ", ");
 			System.out.print(rs.getString("CountryCode") + "\n");
@@ -167,7 +167,7 @@ public class QueryStatement {
 		String lan = sc.next();
 		
 		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery("select CountryLanguage.Language, Country.Name from CountryLanguage inner join Country on Country.Code = CountryLanguage.CountryCode where IsOfficial LIKE 'T' && Language LIKE '" + lan + "'");
+		ResultSet rs = st.executeQuery("select CountryLanguage.Language, Country.Name from CountryLanguage inner join Country on country.Code = countrylanguage.CountryCode where CountryLanguage.IsOfficial LIKE 'T' and CountryLanguage.Language LIKE '" + lan + "'");
 		while(rs.next()) {
 			System.out.print(rs.getString("CountryLanguage.Language") + ", ");
 			System.out.print(rs.getString("Country.Name") + "\n");
